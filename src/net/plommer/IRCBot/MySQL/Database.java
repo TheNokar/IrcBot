@@ -26,7 +26,7 @@ public class Database {
 	
 	public Connection db() {
 		try {
-			return DriverManager.getConnection("jdbc:mysql://localhost:3306/minecraft?autoReconnect=true&user=root&password=root");
+			return DriverManager.getConnection("jdbc:mysql://localhost:3306/minecraft?autoReconnect=true&user="+Main.muser+"&password="+Main.mpass);
 		} catch (SQLException ex) {
 			System.out.println("Failed to connect to mysql. Plugin is now shutting down!");
 		}
@@ -68,7 +68,6 @@ public class Database {
 			ps.execute();
 			ResultSet rs = ps.getResultSet();
 			while(rs.next()) {
-				System.out.print(rs.getInt(1));
 				if(rs.getInt(1) > 0) {
 					return true;
 				} else {

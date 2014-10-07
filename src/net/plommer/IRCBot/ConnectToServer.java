@@ -12,18 +12,19 @@ import net.plommer.IRCBot.Commands.CommandHandler;
 public class ConnectToServer implements Runnable {
 	
 	public static BufferedWriter w = null;
-	private BufferedReader r = null;
-	
+	public static BufferedReader r = null;
+	public static Socket s = null;
 	public ConnectToServer() {
 		try {
-			Socket s = new Socket(Main.server, 6667);
+			s = new Socket(Main.server, Main.port);
 			w = new BufferedWriter(new OutputStreamWriter(s.getOutputStream(), "UTF-8"));
 			r = new BufferedReader(new InputStreamReader(s.getInputStream(), "UTF-8"));
 			if(s.isConnected()) {
+				w.write(U.getMessageString("PASS {0}:{1}", new String[] {"NRG", "plommer123"}));
 				w.write(U.getMessageString("NICK {0}", new String[] {Main.nick}));
-				w.write(U.getMessageString("USER {0} {1}", new String[] {Main.login, "8 * : Java IRC Hacks Bot"}));
+				w.write(U.getMessageString("USER {0} {1}", new String[] {Main.login, "8 * : Bot"}));
 				w.flush();
-				System.out.print(U.b(new String[] {"Starting the Thread!"}));
+				System.out.println(U.b(new String[] {"Starting the Thread!"}));
 				new Thread(this).start();
 			}
 		} catch (IOException e) {

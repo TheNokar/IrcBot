@@ -8,11 +8,11 @@ public abstract class Commands {
 	private String user;
 	private String cmdname;
 	private String[] args;
-	private String permissions;
+	private String permissions = null;
 	
 	public boolean run(String cmd, String user, String[] args) {
 		Users u = new Users(user);
-		if(!u.hasPermissions(getPermissions())) {
+		if(!u.hasPermissions(getPermissions()) && getPermissions() != null) {
 			U.sendMessage("&cÞú hefur ekki leyfi á þessu!");
 			return false;
 		}
